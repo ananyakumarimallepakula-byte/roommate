@@ -17,7 +17,6 @@ backend/target/
 backend/data/
 backend/uploads/*
 !backend/uploads/.gitkeep
-backend/.mvn/
 backend/*.iml
 backend/.idea/
 backend/.vscode/
