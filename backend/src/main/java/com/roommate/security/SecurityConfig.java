@@ -73,6 +73,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/health/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/accommodations/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/accommodations/featured").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/accommodations/{id}").permitAll()
