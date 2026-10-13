@@ -1,16 +1,39 @@
 services:
   - type: web
     name: roommate-backend
-    env: docker
+    runtime: docker
     dockerfilePath: ./Dockerfile
     plan: free
     healthCheckPath: /api/v1/health
     envVars:
+      # Spring Boot active profile
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # Server
       - key: PORT
         value: 8080
-      - key: CORS_ALLOWED_ORIGINS
-        value: https://roommate-pi.vercel.app,http://localhost:5173
+      # Database — set these to your MySQL instance credentials
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # Security
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRATION_MS
         value: 86400000
+      # CORS — your Vercel frontend URL
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://roommate-pi.vercel.app
+      # File uploads
+      - key: UPLOAD_DIR
+        value: /app/uploads
+      # Data seeding — disable in production after initial deploy
+      - key: DATA_INIT_ENABLED
+        value: true

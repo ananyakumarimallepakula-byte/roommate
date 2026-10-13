@@ -26,6 +26,7 @@ COPY --from=build /app/backend/target/roommate-backend-*.jar app.jar
 USER roommate
 
 ENV PORT=8080
+ENV SPRING_PROFILES_ACTIVE=""
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT} -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} -jar app.jar"]

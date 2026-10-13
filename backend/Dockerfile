@@ -27,7 +27,8 @@ USER roommate
 
 # Default port (Render automatically provides $PORT)
 ENV PORT=8080
+ENV SPRING_PROFILES_ACTIVE=""
 EXPOSE 8080
 
 # Launch application with container-aware memory allocation
-ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT} -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} -jar app.jar"]
