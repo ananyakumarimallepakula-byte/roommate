@@ -227,6 +227,9 @@ public class DataInitializer implements CommandLineRunner {
 
         // Ensure sample approved accommodation exists
         if (accommodationRepository.count() == 0 && ownerRajesh != null) {
+            List<Amenity> ams = amenityRepository.findAll();
+
+            // 1. Luxury Studio Room near Hauz Khas Metro
             Accommodation a1 = new Accommodation();
             a1.setOwner(ownerRajesh);
             a1.setTitle("Luxury Studio Room near Hauz Khas Metro");
@@ -243,18 +246,14 @@ public class DataInitializer implements CommandLineRunner {
             a1.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
             a1.setModerationStatus(ModerationStatus.APPROVED);
             a1.setHouseRules("No loud music after 11 PM. Keep common areas clean. Guests allowed with prior notice.");
-
-            List<Amenity> ams = amenityRepository.findAll();
             if (!ams.isEmpty()) {
                 a1.setAmenities(new HashSet<>(ams.subList(0, Math.min(6, ams.size()))));
             }
             Accommodation savedA1 = accommodationRepository.save(a1);
+            accommodationImageRepository.save(new AccommodationImage(savedA1, "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&fit=crop", true));
+            accommodationImageRepository.save(new AccommodationImage(savedA1, "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&fit=crop", false));
 
-            AccommodationImage img1 = new AccommodationImage(savedA1, "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&fit=crop", true);
-            AccommodationImage img2 = new AccommodationImage(savedA1, "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&fit=crop", false);
-            accommodationImageRepository.save(img1);
-            accommodationImageRepository.save(img2);
-
+            // 2. Premium 2BHK Shared Flat with Balcony
             Accommodation a2 = new Accommodation();
             a2.setOwner(ownerRajesh);
             a2.setTitle("Premium 2BHK Shared Flat with Balcony");
@@ -272,11 +271,192 @@ public class DataInitializer implements CommandLineRunner {
             a2.setModerationStatus(ModerationStatus.APPROVED);
             a2.setHouseRules("Non-smoking premises. Mutual respect for flatmates study timings.");
             Accommodation savedA2 = accommodationRepository.save(a2);
+            accommodationImageRepository.save(new AccommodationImage(savedA2, "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&fit=crop", true));
 
-            AccommodationImage img2_1 = new AccommodationImage(savedA2, "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&fit=crop", true);
-            accommodationImageRepository.save(img2_1);
+            // 3. Cozy PG near North Campus
+            Accommodation a3 = new Accommodation();
+            a3.setOwner(ownerSunita);
+            a3.setTitle("Cozy PG Room near North Campus DU");
+            a3.setDescription("Comfortable single-occupancy PG with home-cooked meals, laundry service, and 24/7 security. Walking distance to Delhi University North Campus and metro station.");
+            a3.setCity("New Delhi");
+            a3.setLocality("North Campus");
+            a3.setAddress("F-14, Vijay Nagar, North Campus, New Delhi");
+            a3.setRent(new BigDecimal("8000.00"));
+            a3.setSecurityDeposit(new BigDecimal("16000.00"));
+            a3.setRoomType(RoomType.SHARED);
+            a3.setFurnishingStatus(FurnishingStatus.FULLY_FURNISHED);
+            a3.setGenderPreference(GenderPreference.FEMALE_ONLY);
+            a3.setAvailableFrom(LocalDate.now().plusDays(3));
+            a3.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a3.setModerationStatus(ModerationStatus.APPROVED);
+            a3.setHouseRules("Girls only. Gate closes at 10:30 PM. Visitors allowed in common area only.");
+            if (ams.size() > 4) {
+                a3.setAmenities(new HashSet<>(ams.subList(0, 4)));
+            }
+            Accommodation savedA3 = accommodationRepository.save(a3);
+            accommodationImageRepository.save(new AccommodationImage(savedA3, "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&fit=crop", true));
+            accommodationImageRepository.save(new AccommodationImage(savedA3, "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&fit=crop", false));
 
-            logger.info("Initialized default approved accommodations.");
+            // 4. Modern Flat in Koramangala, Bangalore
+            Accommodation a4 = new Accommodation();
+            a4.setOwner(ownerRajesh);
+            a4.setTitle("Modern 1BHK in Koramangala Tech Hub");
+            a4.setDescription("Stylish 1BHK apartment in the heart of Bangalore's tech corridor. Close to startups, cafes, and Koramangala 4th Block market. High-speed broadband included.");
+            a4.setCity("Bangalore");
+            a4.setLocality("Koramangala");
+            a4.setAddress("No. 221, 5th Cross, Koramangala 4th Block, Bangalore");
+            a4.setRent(new BigDecimal("16000.00"));
+            a4.setSecurityDeposit(new BigDecimal("48000.00"));
+            a4.setRoomType(RoomType.PRIVATE);
+            a4.setFurnishingStatus(FurnishingStatus.FULLY_FURNISHED);
+            a4.setGenderPreference(GenderPreference.ANY);
+            a4.setAvailableFrom(LocalDate.now().plusDays(7));
+            a4.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a4.setModerationStatus(ModerationStatus.APPROVED);
+            a4.setHouseRules("No pets. Maintain silence after 10 PM. Electricity bill shared equally.");
+            if (ams.size() > 8) {
+                a4.setAmenities(new HashSet<>(ams.subList(0, 8)));
+            }
+            Accommodation savedA4 = accommodationRepository.save(a4);
+            accommodationImageRepository.save(new AccommodationImage(savedA4, "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&fit=crop", true));
+            accommodationImageRepository.save(new AccommodationImage(savedA4, "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&fit=crop", false));
+
+            // 5. Budget Room in HSR Layout, Bangalore
+            Accommodation a5 = new Accommodation();
+            a5.setOwner(ownerSunita);
+            a5.setTitle("Budget-Friendly Room in HSR Layout");
+            a5.setDescription("Affordable shared room ideal for students and working professionals. Clean, spacious, and well-maintained with common kitchen access. Near HSR BDA Complex and bus stop.");
+            a5.setCity("Bangalore");
+            a5.setLocality("HSR Layout");
+            a5.setAddress("Sector 2, HSR Layout, Bangalore");
+            a5.setRent(new BigDecimal("7500.00"));
+            a5.setSecurityDeposit(new BigDecimal("15000.00"));
+            a5.setRoomType(RoomType.SHARED);
+            a5.setFurnishingStatus(FurnishingStatus.SEMI_FURNISHED);
+            a5.setGenderPreference(GenderPreference.MALE_ONLY);
+            a5.setAvailableFrom(LocalDate.now().plusDays(2));
+            a5.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a5.setModerationStatus(ModerationStatus.APPROVED);
+            a5.setHouseRules("Smoking strictly prohibited. Keep kitchen clean after use.");
+            Accommodation savedA5 = accommodationRepository.save(a5);
+            accommodationImageRepository.save(new AccommodationImage(savedA5, "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&fit=crop", true));
+
+            // 6. Spacious Flat in Bandra, Mumbai
+            Accommodation a6 = new Accommodation();
+            a6.setOwner(ownerRajesh);
+            a6.setTitle("Sea-Facing Studio in Bandra West");
+            a6.setDescription("Charming studio apartment with partial sea view near Bandstand. Premium locality with easy access to Bandra station, restaurants, and shopping. Fully furnished with modern interiors.");
+            a6.setCity("Mumbai");
+            a6.setLocality("Bandra West");
+            a6.setAddress("Carter Road, Bandra West, Mumbai");
+            a6.setRent(new BigDecimal("22000.00"));
+            a6.setSecurityDeposit(new BigDecimal("66000.00"));
+            a6.setRoomType(RoomType.PRIVATE);
+            a6.setFurnishingStatus(FurnishingStatus.FULLY_FURNISHED);
+            a6.setGenderPreference(GenderPreference.ANY);
+            a6.setAvailableFrom(LocalDate.now().plusDays(15));
+            a6.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a6.setModerationStatus(ModerationStatus.APPROVED);
+            a6.setHouseRules("No parties. Society rules apply. Maintenance charges included.");
+            if (ams.size() > 10) {
+                a6.setAmenities(new HashSet<>(ams.subList(0, 10)));
+            }
+            Accommodation savedA6 = accommodationRepository.save(a6);
+            accommodationImageRepository.save(new AccommodationImage(savedA6, "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&fit=crop", true));
+            accommodationImageRepository.save(new AccommodationImage(savedA6, "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&fit=crop", false));
+
+            // 7. PG near HITEC City, Hyderabad
+            Accommodation a7 = new Accommodation();
+            a7.setOwner(ownerSunita);
+            a7.setTitle("Premium PG near HITEC City");
+            a7.setDescription("Fully managed PG accommodation with meals, housekeeping, and high-speed WiFi. 10 minutes from major IT parks in HITEC City and Gachibowli. Ideal for tech professionals and students.");
+            a7.setCity("Hyderabad");
+            a7.setLocality("HITEC City");
+            a7.setAddress("Plot 45, Madhapur, HITEC City, Hyderabad");
+            a7.setRent(new BigDecimal("11000.00"));
+            a7.setSecurityDeposit(new BigDecimal("22000.00"));
+            a7.setRoomType(RoomType.SHARED);
+            a7.setFurnishingStatus(FurnishingStatus.FULLY_FURNISHED);
+            a7.setGenderPreference(GenderPreference.ANY);
+            a7.setAvailableFrom(LocalDate.now().plusDays(4));
+            a7.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a7.setModerationStatus(ModerationStatus.APPROVED);
+            a7.setHouseRules("Meal timings: 8 AM, 1 PM, 8 PM. Guests not allowed overnight.");
+            if (ams.size() > 7) {
+                a7.setAmenities(new HashSet<>(ams.subList(0, 7)));
+            }
+            Accommodation savedA7 = accommodationRepository.save(a7);
+            accommodationImageRepository.save(new AccommodationImage(savedA7, "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&fit=crop", true));
+
+            // 8. Affordable Room in Kothrud, Pune
+            Accommodation a8 = new Accommodation();
+            a8.setOwner(ownerRajesh);
+            a8.setTitle("Student Room near MIT Pune");
+            a8.setDescription("Clean and quiet single room perfect for students of MIT, COEP, and Symbiosis. Includes study table, wardrobe, and shared kitchen. Close to Kothrud bus depot.");
+            a8.setCity("Pune");
+            a8.setLocality("Kothrud");
+            a8.setAddress("Lane 5, Paud Road, Kothrud, Pune");
+            a8.setRent(new BigDecimal("6500.00"));
+            a8.setSecurityDeposit(new BigDecimal("13000.00"));
+            a8.setRoomType(RoomType.PRIVATE);
+            a8.setFurnishingStatus(FurnishingStatus.SEMI_FURNISHED);
+            a8.setGenderPreference(GenderPreference.MALE_ONLY);
+            a8.setAvailableFrom(LocalDate.now().plusDays(8));
+            a8.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a8.setModerationStatus(ModerationStatus.APPROVED);
+            a8.setHouseRules("Students only. No smoking or alcohol on premises.");
+            if (ams.size() > 5) {
+                a8.setAmenities(new HashSet<>(ams.subList(0, 5)));
+            }
+            Accommodation savedA8 = accommodationRepository.save(a8);
+            accommodationImageRepository.save(new AccommodationImage(savedA8, "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&fit=crop", true));
+            accommodationImageRepository.save(new AccommodationImage(savedA8, "https://images.unsplash.com/photo-1600566753086-00f18da44096?w=800&fit=crop", false));
+
+            // 9. Luxury Apartment in Powai, Mumbai
+            Accommodation a9 = new Accommodation();
+            a9.setOwner(ownerSunita);
+            a9.setTitle("Lake-View 2BHK in Powai");
+            a9.setDescription("Premium 2BHK apartment overlooking Powai Lake. Gated society with gym, swimming pool, and clubhouse. Near IIT Bombay and Hiranandani Gardens. Fully air-conditioned.");
+            a9.setCity("Mumbai");
+            a9.setLocality("Powai");
+            a9.setAddress("Hiranandani Gardens, Powai, Mumbai");
+            a9.setRent(new BigDecimal("25000.00"));
+            a9.setSecurityDeposit(new BigDecimal("75000.00"));
+            a9.setRoomType(RoomType.PRIVATE);
+            a9.setFurnishingStatus(FurnishingStatus.FULLY_FURNISHED);
+            a9.setGenderPreference(GenderPreference.ANY);
+            a9.setAvailableFrom(LocalDate.now().plusDays(12));
+            a9.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a9.setModerationStatus(ModerationStatus.APPROVED);
+            a9.setHouseRules("Society norms apply. No loud music. Parking available at extra cost.");
+            if (!ams.isEmpty()) {
+                a9.setAmenities(new HashSet<>(ams));
+            }
+            Accommodation savedA9 = accommodationRepository.save(a9);
+            accommodationImageRepository.save(new AccommodationImage(savedA9, "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&fit=crop", true));
+            accommodationImageRepository.save(new AccommodationImage(savedA9, "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=800&fit=crop", false));
+
+            // 10. Affordable Shared Room in Ameerpet, Hyderabad
+            Accommodation a10 = new Accommodation();
+            a10.setOwner(ownerRajesh);
+            a10.setTitle("Shared Room near Ameerpet Metro");
+            a10.setDescription("Budget-friendly shared accommodation just 2 minutes from Ameerpet Metro. Ideal for coaching students and job seekers. Basic furnishing with common bathrooms and kitchen.");
+            a10.setCity("Hyderabad");
+            a10.setLocality("Ameerpet");
+            a10.setAddress("Street 4, SR Nagar, Ameerpet, Hyderabad");
+            a10.setRent(new BigDecimal("5500.00"));
+            a10.setSecurityDeposit(new BigDecimal("5500.00"));
+            a10.setRoomType(RoomType.SHARED);
+            a10.setFurnishingStatus(FurnishingStatus.UNFURNISHED);
+            a10.setGenderPreference(GenderPreference.MALE_ONLY);
+            a10.setAvailableFrom(LocalDate.now().plusDays(1));
+            a10.setAvailabilityStatus(AvailabilityStatus.AVAILABLE);
+            a10.setModerationStatus(ModerationStatus.APPROVED);
+            a10.setHouseRules("Keep the room clean. Electricity charges extra. No cooking in rooms.");
+            Accommodation savedA10 = accommodationRepository.save(a10);
+            accommodationImageRepository.save(new AccommodationImage(savedA10, "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&fit=crop", true));
+
+            logger.info("Initialized {} approved accommodations.", accommodationRepository.count());
         }
     }
 }
