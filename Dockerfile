@@ -27,6 +27,6 @@ USER roommate
 
 ENV PORT=8080
 ENV SPRING_PROFILES_ACTIVE=""
-EXPOSE 8080
+EXPOSE 10000
 
 ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} -jar app.jar"]
