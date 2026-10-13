@@ -12,16 +12,13 @@ services:
       # Server
       - key: PORT
         value: 8080
-      # Database — set these to your MySQL instance credentials
-      - key: DB_HOST
+      # Database — provide the FULL JDBC URL (no DB_HOST composition)
+      # Example: jdbc:mysql://your-host.aiven.io:3306/roommate_db?useSSL=true&serverTimezone=UTC
+      - key: SPRING_DATASOURCE_URL
         sync: false
-      - key: DB_PORT
-        value: 3306
-      - key: DB_NAME
+      - key: SPRING_DATASOURCE_USERNAME
         sync: false
-      - key: DB_USER
-        sync: false
-      - key: DB_PASSWORD
+      - key: SPRING_DATASOURCE_PASSWORD
         sync: false
       # Security
       - key: JWT_SECRET
@@ -34,6 +31,6 @@ services:
       # File uploads
       - key: UPLOAD_DIR
         value: /app/uploads
-      # Data seeding — disable in production after initial deploy
+      # Data seeding — disable after first deploy
       - key: DATA_INIT_ENABLED
         value: true
