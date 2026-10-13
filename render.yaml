@@ -6,20 +6,9 @@ services:
     plan: free
     healthCheckPath: /api/v1/health
     envVars:
-      # Spring Boot active profile
-      - key: SPRING_PROFILES_ACTIVE
-        value: prod
       # Server
       - key: PORT
         value: 8080
-      # Database — provide the FULL JDBC URL (no DB_HOST composition)
-      # Example: jdbc:mysql://your-host.aiven.io:3306/roommate_db?useSSL=true&serverTimezone=UTC
-      - key: SPRING_DATASOURCE_URL
-        sync: false
-      - key: SPRING_DATASOURCE_USERNAME
-        sync: false
-      - key: SPRING_DATASOURCE_PASSWORD
-        sync: false
       # Security
       - key: JWT_SECRET
         generateValue: true
@@ -31,6 +20,6 @@ services:
       # File uploads
       - key: UPLOAD_DIR
         value: /app/uploads
-      # Data seeding — disable after first deploy
+      # Data seeding
       - key: DATA_INIT_ENABLED
         value: true
